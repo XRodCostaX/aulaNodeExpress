@@ -1,6 +1,8 @@
-const express = require('express');
+const express = require('express');//framework para rotas
+const bodyParser = require('body-parser');
 const { send } = require('express/lib/response');
 const server = express();
+const jsonParser = bodyParser.json()
 
 const usuarios = [{
         id:1,
@@ -18,6 +20,8 @@ const usuarios = [{
         sobrenome: "Araujo Costa",
     }
 ]
+//CRUD//
+
 
 server.get('/usuarios/', (req, res) => {
     res.send(usuarios)
@@ -30,6 +34,21 @@ server.get('/usuarios/:id', (req, res) => {
 
     res.send(aux)
 })
+//adiciona 
+server.post('/usuarios/', jsonParser, (req, res) => {
+    console.log(req.body)
+    const newUser = req.body
+    usuarios.push(newUser)
+    res.send(usuarios)
+} )
+//deleta
+server.delete('/usuarios/:index', (req, res) => {
+    const {index} = req.params
+    usuarios.splice(index, 1)
+    res.send(usuarios)
+    
+} )
+
 
 
 
